@@ -2,13 +2,8 @@ package pl.coderslab.encje;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.encje.model.Book;
-import pl.coderslab.encje.model.BookDao;
-import pl.coderslab.encje.model.Publisher;
-import pl.coderslab.encje.model.PublisherDao;
+import org.springframework.web.bind.annotation.*;
+import pl.coderslab.encje.model.*;
 
 @Controller
 @RequestMapping("/book")
@@ -16,12 +11,53 @@ public class BookController {
 
     private final BookDao bookDao;
     private final PublisherDao publisherDao;
+    private final AuthorDao authorDao;
 
-    public BookController(BookDao bookDao, PublisherDao publisherDao) {
+    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao) {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
+        this.authorDao = authorDao;
     }
 
+
+    @GetMapping("/bookswithpublishers")
+    @ResponseBody
+    public String booksWithPublishers() {
+        bookDao.findBooksWithPublisher()
+                .forEach(b-> System.out.println(b.getTitle()));
+        return "books with publishers:";
+    }
+    @GetMapping("/bookByPub")
+    @ResponseBody
+    public String booksByPub(@RequestParam Long pubId) {
+        bookDao.findAllbyPublisher(publisherDao.getPublisherById(pubId))
+                .forEach(b-> System.out.println(b.getTitle()));
+        return "books by publisher Id:";
+    }
+
+    @GetMapping("/bookByAuthor")
+    @ResponseBody
+    public String booksByAuthor(@RequestParam Long authorId) {
+        bookDao.findByAuthor(authorDao.getAuthorById(authorId))
+                .forEach(b-> System.out.println(b.getTitle()));
+        return "books by author Id:";
+    }
+
+
+    @GetMapping("/test-rating")
+    @ResponseBody
+    public String testRatinig(@RequestParam int rating) {
+        bookDao.findAllbyRating(rating)
+                .forEach(b-> System.out.println(b.getTitle()));
+        return "test-rating:";
+    }
+    @GetMapping("/allpublishers")
+    @ResponseBody
+    public String showAllPublishers() {
+        publisherDao.findAll()
+                .forEach(b-> System.out.println(b.getName()));
+        return "all publishers:";
+    }
 
     @RequestMapping("/create")
     @ResponseBody

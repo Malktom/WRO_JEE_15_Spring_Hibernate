@@ -8,9 +8,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-
-
-
+@Table(name="publshers")
 public class Publisher {
 
     @Id

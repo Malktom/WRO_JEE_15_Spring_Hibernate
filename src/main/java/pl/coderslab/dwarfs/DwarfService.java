@@ -3,6 +3,8 @@ package pl.coderslab.dwarfs;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service   // serwisy skupiaja wiele repozytoriow ( np klasy dao)
 public class DwarfService {
 
@@ -19,4 +21,7 @@ public class DwarfService {
         return dwarfDao.findById(id);
     }
 
+    public List<Dwarf> findAll() {
+        return dwarfDao.findAllSecond();
+    }
 }
