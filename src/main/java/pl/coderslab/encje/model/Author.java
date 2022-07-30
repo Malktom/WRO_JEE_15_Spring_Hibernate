@@ -17,6 +17,12 @@ public class Author {
     private Long id;
     private String firstName;
     private String lastName;
-    @ManyToMany(mappedBy = "authors")
-    private List<Book> book;
+//    @ManyToMany(mappedBy = "authors")
+//    private List<Book> book;
+
+
+    @Override
+    public String toString() {
+        return this.firstName + " "+ this.lastName;
+    }
 }

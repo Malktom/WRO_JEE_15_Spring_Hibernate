@@ -3,39 +3,37 @@ package pl.coderslab.encje.model;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/bookFormat")
-public class BookFormatController {
+@RequestMapping("/bookForm")
+public class BookFormController {
 
     private BookDao bookDao;
     private PublisherDao publisherDao;
-
-    public BookFormatController(BookDao bookDao, PublisherDao publisherDao) {
+    private AuthorDao authorDao;
+    public BookFormController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao) {
         this.bookDao = bookDao;
         this.publisherDao=publisherDao;
+        this.authorDao=authorDao;
     }
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("books", bookDao.findAll());
-        return "list";
+        return "booksList";
     }
     @GetMapping("/addBook")
     public String addBook(Model model){
-        Book book = new Book();
-        model.addAttribute("book", book);
+        model.addAttribute("book", new Book());
         model.addAttribute("publishers", publisherDao.findAll());
+        model.addAttribute("authors", authorDao.findAll());
         return "addBook";
 
     }
     @PostMapping("/addBook")
-
-    public String saveBook(Book book, Model model) {
+    @ResponseBody
+    public String saveBook(Book book) {
         bookDao.save(book);
-        return "list";
+        return "list updated";
     }
 }

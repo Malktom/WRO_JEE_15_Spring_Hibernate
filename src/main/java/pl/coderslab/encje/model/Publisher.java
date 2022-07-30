@@ -1,8 +1,10 @@
 package pl.coderslab.encje.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,5 +18,11 @@ public class Publisher {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "publisher") // dwukierunkowa relacja
-    private List<Book> books;
+    private List<Book> books=new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
+

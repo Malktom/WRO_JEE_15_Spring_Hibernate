@@ -17,6 +17,11 @@ public class StudentController {
         String[] a = new String[] {"java", "php", "ruby", "python"};
         return Arrays.asList(a);
     }
+    @ModelAttribute("hobbies")
+    public List<String> hobbiesOptions() {
+        String[] a = new String[] {"music", "cinema", "rugby", "books"};
+        return Arrays.asList(a);
+    }
     @GetMapping("/add")
     public String add(Model model){
         Student student = new Student();
@@ -34,4 +39,5 @@ public class StudentController {
         model.addAttribute("student",student);
         return"save";
     }
+
 }

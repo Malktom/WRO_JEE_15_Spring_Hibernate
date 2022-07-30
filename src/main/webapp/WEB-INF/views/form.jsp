@@ -18,6 +18,7 @@
     <form:input path="firstName"/>
     lastname:
     <form:input path="lastName"/>
+    <form:checkboxes path="hobbies" items="${hobbies}"/>
         <input type="submit" value="Wyśl"/>
 </form:form>
 
